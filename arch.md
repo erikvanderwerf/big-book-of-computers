@@ -68,7 +68,7 @@ WantedBy=multi-user.target
 
 Enable the path unit.
 ```bash
-systemctl enable --now thing-restart.path
+    systemctl enable --now thing-restart.path
 ```
 
 # Networking
@@ -114,19 +114,20 @@ Remember to allow (or limit) SSH access before enabling the firewall.
 There are two technologies available which allow devices on a local network to automatically resolve local hostnames and domains.
 By default, Unix prefers mDNS while Windows is configured to use NetBIOS.
 
-### nDNS
+### mDNS
 idk
 
 ### NetBIOS
 Install the [Samba](https://wiki.archlinux.org/title/samba) package.
 
-To run the server, configure the `smb.conf` and enable the `nmb.service`.
+To run the server, configure the `smb.conf`.
 
 `/etc/samba/smb.conf`
 ```smb.conf
 netbios aliases = name1, name2, ...
 ```
 
+Then enable the `nmb.service`.
 ```bash
     testparm                              # Validate Samba config.
     systemctl enable --now nmb.service    # Enable NetBIOS.
@@ -195,7 +196,7 @@ On systems without `systemd` (like Windows), configure the agent to start inside
 This will start a new `ssh-agent` process if one is not currently running, and source the environment file if the current environment is not using the agent socket file.
 
 `~/.bashrc`
-```.bashrc
+```bash
 AGENT_CONFIG= ="${XDG_RUNTIME_DIR:=$HOME}"
 # Check for running agent.
 if ! ps -ef | grep "$USER" | awk '{print $6}' | grep "ssh-agent" > /dev/null; then
@@ -236,18 +237,18 @@ Run [ssh-audit](https://archlinux.org/packages/community/any/ssh-audit/) to find
 
 `/etc/ssh/sshd_config`
 ```sshd_config
-    Protocol 2
-    StrictMode yes
-    
-    KexAlgorithms -x,y
-    MACs -x,y
-    HostKeyAlgorithms -x,y
-    
-    PermitRootLogin no
-    PermitEmptyPasswords no
-    
-    AuthenticationMethods publickey
-    PasswordAuthentication no
+Protocol 2
+StrictMode yes
+
+KexAlgorithms -x,y
+MACs -x,y
+HostKeyAlgorithms -x,y
+
+PermitRootLogin no
+PermitEmptyPasswords no
+
+AuthenticationMethods publickey
+PasswordAuthentication no
 ```
 
 # Shells
@@ -260,7 +261,7 @@ Run [ssh-audit](https://archlinux.org/packages/community/any/ssh-audit/) to find
 Remember to configure a `.bashrc` for the root account too!
 
 `~/.bashrc`
-```.bashrc
+```bash
 alias ls='ls --color=auto'
 alias ll='ls -la'
 
