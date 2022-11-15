@@ -17,9 +17,9 @@ Remember to keep it up-to-date when GRUB is updated.
 [Pacman](https://wiki.archlinux.org/title/pacman) is the package manager for Arch.
 
 ```bash
-    pacman -Sy <package>        # Install a package
-    pacman -Syu                 # Upgrade the host
-    pacman -R <package>         # Remove a package
+    pacman -Sy <package>        # Install a package.
+    pacman -Syu                 # Upgrade the host.
+    pacman -R <package>         # Remove a package.
     pacman -Rs <packge>         # Remove a package and its orphaned dependencies.
     pacman -Qdt                 # Query for unnecessary packages.
     pacman -Rns $(pacman -Qdt)  # Remove (including config) unnecessary packages.
@@ -83,8 +83,8 @@ NetworkManager casing is not consistent.
     pacman -S networkmanager
     systemctl enable --now NetworkManger.service
     
-    nmcli    # Command Line Interface
-    nmtui    # Text-Based Interface (Terminal Graphics)
+    nmcli    # Command Line Interface.
+    nmtui    # Text-Based Interface (Terminal Graphics).
 ```
 
 Remember to enable the interface to "automatically" start on reboot.
@@ -129,7 +129,7 @@ netbios aliases = name1, name2, ...
 
 ```bash
     testparm                              # Validate Samba config.
-    systemctl enable --now nmb.service    # Enable NetBIOS
+    systemctl enable --now nmb.service    # Enable NetBIOS.
     ufw allow CIFS                        # Allow incoming UDP/137 requests.
 ```
 
@@ -138,4 +138,131 @@ To run the client on Linux, enable the `winbind.service` and enable name resolut
 `/etc/nsswitch.conf`
 ```nsswitch.conf
 hosts: ... wins
+```
+
+## Other Useful Programs
+```bash
+    ip addr                    # Interface info.
+    ip neighbor                # ARP table
+    drill google.com           # DNS Checker
+    nmap 10.4.0.0/24           # Check local network
+    traceroute google.com      # Track network path.
+    curl checkip.dyndns.org    # Get public IP.
+```
+
+# Users
+On Arch, [sudo](https://wiki.archlinux.org/title/sudo) is not installed automatically.
+
+```bash
+    # Uncomment the wheel group to grant sudo access.
+    EDITOR=vim visudo    # Edit the sudoers file.
+    
+    useradd -m <user>           # Create a new user with a home directory.
+    usermod -aG wheel <user>    # Add this user to the wheel group.
+    passwd <user>               # Change password for user.
+```
+
+# SSH
+Configure [SSH](https://wiki.archlinux.org/title/Secure_Shell) to allow remote connections to a machine.
+
+```bash
+    systemctl enable --now sshd
+```
+
+## Create and Copy a Public Key
+Authenticating SSH connections with public keys is more secure, and also easier, compared to connecting with passwords.
+Create an identity if needed on the client, and then copy the key to the host.
+Prefer ED25519 keys.
+
+```bash
+    mkdir "$HOME/.ssh"
+    chmod 600 ~/.ssh
+    
+    # Set a passphrase.
+    ssh-keygen -a 256 -t ed25519 -C "$(hostname)-$(date +'%d-%m-%Y')" -f "$HOME/.ssh/$(hostname)-$(date +'%d-%m-%Y')"
+    
+    ssh-copy-id -i ~/.ssh/identity.pub <user>@<host>    # Use -f to disable check for private key.
+    
+    # Test the connection.
+    ssh <user>@<host> -i ~/.ssh/identity -o PasswordAuthentication=no -vv
+```
+## Configure the Client SSH Agent
+The SSH Agent allows the OS to cache decrypted keys and pass them to SSH programs automatically.
+This reduces the number of password prompts the user sees.
+Be sure to start only a single agent.
+
+On systems without `systemd` (like Windows), configure the agent to start inside the `.bashrc`.
+This will start a new `ssh-agent` process if one is not currently running, and source the environment file if the current environment is not using the agent socket file.
+
+`~/.bashrc`
+```.bashrc
+AGENT_CONFIG= ="${XDG_RUNTIME_DIR:=$HOME}"
+# Check for running agent.
+if ! ps -ef | grep "$USER" | awk '{print $6}' | grep "ssh-agent" > /dev/null; then
+    ssh-agent -t 1h > "$AGENT_CONFIG/ssh-agent.env"
+fi
+# Check for environment variables.
+if [[ ! -f "$SSH_AUTH_SOCK" ]]; then
+        source "$AGENT_CONFIG/ssh-agent.env" >/dev/null
+fi
+echo "SSH Agent Started: ${SSH_AGENT_PID}"
+```
+
+Be aware that since this is inside the `.bashrc` it will only run once the user opens a Bash prompt.
+Add to a different file if needed under other circumstances.
+If `systemd` is installed, [just use that](https://wiki.archlinux.org/title/SSH_keys#Start_ssh-agent_with_systemd_user).
+
+## Configure the Client SSH Config
+Configure SSH to use an identity file and host shorthands.
+
+`~/.ssh/config`
+```.ssh/config
+Match *
+    AddKeysToAgent yes
+
+Host <host1> <host2>
+    User <user>
+    IdentitiesOnly yes
+    IdentityFile ~/.ssh/<identity>
+    UpdateHostKeys ask
+```
+
+## Lock Down the Host
+Run [ssh-audit](https://archlinux.org/packages/community/any/ssh-audit/) to find open SSH vulnerabilities.
+
+```bash
+    ssh-audit localhost
+```
+
+`/etc/ssh/sshd_config`
+```sshd_config
+    Protocol 2
+    StrictMode yes
+    
+    KexAlgorithms -x,y
+    MACs -x,y
+    HostKeyAlgorithms -x,y
+    
+    PermitRootLogin no
+    PermitEmptyPasswords no
+    
+    AuthenticationMethods publickey
+    PasswordAuthentication no
+```
+
+# Shells
+## Starship
+[Starship](https://starship.rs/) is a customizable prompt that can be run on top of Bash.
+
+* TODO how to select a font???
+
+## Bash
+Remember to configure a `.bashrc` for the root account too!
+
+`~/.bashrc`
+```.bashrc
+alias ls='ls --color=auto'
+alias ll='ls -la'
+
+eval "$(starship init bash)"
 ```
