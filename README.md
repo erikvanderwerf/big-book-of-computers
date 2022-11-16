@@ -7,3 +7,7 @@ A repository of problems and solutions.
 * [Docker](docker.md)
 * [Kubernetes](kubernetes.md)
 * [NGINX](nginx.md)
+
+## TODO
+* zpool
+* smartctl
