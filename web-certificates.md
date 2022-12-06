@@ -1,4 +1,4 @@
-# Certificates
+# Web Certificates
 ```bash
 pacman -S certbot certbot-nginx
 
