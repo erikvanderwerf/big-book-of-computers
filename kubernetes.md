@@ -12,3 +12,5 @@ curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION="v1.24.7+k3s1" sh -s –
 # Uninstall K3s.
 /usr/local/bin/k3s-uninstall.sh
 ```
+
+TODO There is a problem with K3s when the `ufw` firewall is enabled. Investigate which firewall rules are required.
