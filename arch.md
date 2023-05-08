@@ -25,6 +25,10 @@ Remember to keep it up-to-date when GRUB is updated.
     pacman -Rns $(pacman -Qdt)  # Remove (including config) unnecessary packages.
 ```
 
+## AUR Arch User Repository
+The [AUR](https://wiki.archlinux.org/title/Arch_User_Repository) is provided as a collection of community-contributed package *descriptions*.
+It is up to the user to verify and compile the package themselves.
+
 # Devices and File Systems
 ```bash
     mount     # Basic list of mounts.
