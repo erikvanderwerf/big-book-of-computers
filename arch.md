@@ -29,6 +29,15 @@ Remember to keep it up-to-date when GRUB is updated.
 The [AUR](https://wiki.archlinux.org/title/Arch_User_Repository) is provided as a collection of community-contributed package *descriptions*.
 It is up to the user to verify and compile the package themselves.
 
+```bash
+    cd builds/
+    git clone <AUR git clone URL>
+    makepkg
+    pacman -U <package>
+```
+
+Update an AUR project by using `git pull` to collect the latest build and then re-package and install it.
+
 # Devices and File Systems
 ```bash
     mount     # Basic list of mounts.
