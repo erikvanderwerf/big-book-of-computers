@@ -35,6 +35,8 @@ It is up to the user to verify and compile the package themselves.
     lsblk     # List block devices.
 ```
 
+Mounting remote NFS servers requires root.
+
 * [Btrfs - Arch Wiki](https://wiki.archlinux.org/title/btrfs)
 * [NFS - Arch Wiki](https://wiki.archlinux.org/title/NFS)
 
