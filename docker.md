@@ -1,6 +1,11 @@
 # Docker
 [Docker](https://wiki.archlinux.org/title/docker) is a container engine.
 
+```bash
+docker run -it --rm --name debby debian bash
+docker exec -it debby bash
+```
+
 # Docker Compose
 
 Docker Compose is an alternate to the Docker CLI that offloads configuration to YAML files.
