@@ -15,6 +15,15 @@ Compose allows the user to create and destroy multiple Docker resources at once.
 pacman -S docker-compose
 ```
 
+Every Docker Compose project should have its own folder.
+Inside is a single file called `docker-compose.yaml`.
+
+```bash
+docker compose up                # Start containers.
+docker compose down              # Stop containers.
+docker compose down --volumes    # Also removes all unused volumes.
+```
+
 # Deploy a Registry Server
 
 Sourced from [Deploy a Registry Server](https://docs.docker.com/registry/deploying/).
