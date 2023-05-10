@@ -38,6 +38,15 @@ It is up to the user to verify and compile the package themselves.
 
 Update an AUR project by using `git pull` to collect the latest build and then re-package and install it.
 
+## Which Package Owns a File?
+
+Query `pacman` to determine 
+
+```bash
+pacman -Fy          # Update files database.
+pacman -F <file>    # Query a specific file.
+```
+
 # Devices and File Systems
 ```bash
     mount     # Basic list of mounts.
