@@ -30,6 +30,11 @@ Sourced from [Deploy a Registry Server](https://docs.docker.com/registry/deployi
 This `docker-compose.yaml` file mounts an NFS share from a remote host to create a
 Docker registry.
 
+Be aware that the registry server is not transparent.
+`Dockerfile`'s which want to reference images hosted here must do so explicitly using
+the first part of the image identifier `<host:ip>/<image>:<tag>`.
+If ommitted, the global Docker Hub registry at `docker.io` is assumed.
+
 ```yaml
 services:
     registry:
@@ -56,4 +61,16 @@ volumes:
             o: "addr=hostname,rw"
             device: ":/mnt/.../docker-registry"
 
+```
+
+## Upload Images
+
+By default, the registry server is not a pass-through to
+[hub.docker.com](hub.docker.com)/[docker.io](docker.io).
+It must be manually populated with the images you want to host.
+
+```bash
+docker pull ubuntu:16.04
+docker tag ubuntu:16.04 host:ip/ubuntu:16.04
+docker push host:ip/ubuntu:16.04
 ```
