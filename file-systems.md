@@ -25,5 +25,7 @@ system protocol.
 * NFS does not translate user/group ids from local to remote.
 
 ```bash
-mount -t nfs4 -o vers=4 host:/export/root /mount/on/client
+mount -t nfs -o rw,nconnect=16 host:/export/root /mount/on/client    # TrueNAS, NFSv3
 ```
+
+NFS v4 has more features...
