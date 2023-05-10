@@ -125,6 +125,19 @@ The [Uncomplicated Firewall](https://wiki.archlinux.org/title/Uncomplicated_Fire
 
 Remember to allow (or limit) SSH access before enabling the firewall.
 
+## Hosts file
+
+The hosts file is a simple text file that associates IP addresses with hostnames.
+
+```bash
+cat /etc/hosts
+```
+
+```hosts
+127.0.0.1    some-host
+...
+```
+
 ## Local Hostname DNS Resolution
 There are two technologies available which allow devices on a local network to automatically resolve local hostnames and domains.
 By default, Unix prefers mDNS while Windows is configured to use NetBIOS.
