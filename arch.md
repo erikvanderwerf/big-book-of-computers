@@ -40,7 +40,7 @@ Update an AUR project by using `git pull` to collect the latest build and then r
 
 ## Which Package Owns a File?
 
-Query `pacman` to determine 
+Query `pacman` to determine which package owns a given file.
 
 ```bash
 pacman -Fy          # Update files database.
