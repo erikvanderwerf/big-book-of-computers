@@ -9,9 +9,9 @@ from a machine that can respond to queries sent to the domain being certified.
 This means that DNS records and port (80) forwarding must already be set up and correctly routed.
 
 ```bash
-pacman -S certbot                                                # Install certbot.
+pacman -S certbot                                                 # Install certbot.
 certbot certonly --standalone -v --email <email> -d <domains,>    # Make new certificates.
-certbot certificates                                             # List certificates.
+certbot certificates                                              # List certificates.
 ```
 
 Test the certificates by running a simple HTTPS server.
