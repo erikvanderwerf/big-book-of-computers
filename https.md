@@ -10,7 +10,7 @@ This means that DNS records and port (80) forwarding must already be set up and 
 
 ```bash
 pacman -S certbot                                                # Install certbot.
-certbot certonly --standalone -v --email <email>-d <domains,>    # Make new certificates.
+certbot certonly --standalone -v --email <email> -d <domains,>    # Make new certificates.
 certbot certificates                                             # List certificates.
 ```
 
