@@ -186,6 +186,7 @@ hosts: ... wins
     nmap 10.4.0.0/24           # Check local network
     traceroute google.com      # Track network path.
     curl checkip.dyndns.org    # Get public IP.
+    lsof -iTCP -P -n           # List open TCP ports.
 ```
 
 # Users
