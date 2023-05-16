@@ -7,8 +7,16 @@ ufw allow "WWW Full"
 ufw delete allow "WWW Full"
 ```
 
-Create an appropriate NGINX configuration file.
-Use an additional `stream` block to handle non-terminating SSL routing via TCP SNI.
+## SSL Configuration
+
+Reference [https](https.md) to generate an SSL certificate, then reference the
+[Mozilla SSL Configuration Generator](https://ssl-config.mozilla.org/) to create
+an appropriate NGINX configuration file to `include`.
+
+## Non-Terminating SSL Routing via SNI
+
+This example will use a `stream` directive as the receiver for SSL (443) traffic, and use SNI
+to inspect the TCP connection in order to transparently proxy to another host.
 
 `/etc/nginx/nginx.conf`
 ```nginx.conf
@@ -76,7 +84,7 @@ ln -s /etc/nginx/sites-available/by-ip /etc/nginx/sites-enabled/by-ip
 systemctl reload nginx
 ```
 
-If NGINX will also be serving domains (and not just proxy'ing) then create a new server block.
+If NGINX will also be serving real domains (and not just proxy'ing) then create a new server block.
 
 `/etc/nginx/sites-available/domain`
 ```nginx.conf
@@ -97,7 +105,9 @@ server {
 ```
 
 Listen on a different port than 443 to allow the stream block to handle all incoming traffic
-initially, and forward it to `localhost:8443` to reach this HTTP server.
+initially.
+Configure this HTTP server as an `upstream` pointing to `localhost:8443` to appropriately
+direct traffic.
 
 # GoAccess
 ```bash
