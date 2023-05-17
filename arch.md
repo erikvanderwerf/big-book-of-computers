@@ -120,10 +120,10 @@ Be aware that on [TrueNAS Scale](https://www.truenas.com/docs/scale/scaletutoria
 The [Uncomplicated Firewall](https://wiki.archlinux.org/title/Uncomplicated_Firewall) provides a command line interface to control the system firewall.
 
 ```bash
-    ufw allow ssh     # Allow SSH preconfigured network rules.
-    ufw limit ssh     # Allow SSH with rate limits.
-    ufw delete ssh    # Delete rules for SSH.
-    ufw enable        # Turn on the firewall.
+    ufw allow ssh               # Allow SSH preconfigured network rules.
+    ufw limit ssh               # Allow SSH with rate limits.
+    ufw delete ssh              # Delete rules for SSH.
+    ufw enable                  # Turn on the firewall.
     
     # Allow TCP from a subnet to port 7890 on any destination.
     ufw allow proto tcp from 10.4.0.0/24 to any port 79890
@@ -133,6 +133,28 @@ The [Uncomplicated Firewall](https://wiki.archlinux.org/title/Uncomplicated_Fire
 ```
 
 Remember to allow (or limit) SSH access before enabling the firewall.
+A more extreme approach is to lock down incoming and outgoing traffic by default, and
+create rules for every allowed action.
+
+```bash
+    ufw default deny incoming   # Deny all inbound traffic by default.
+    ufw default deny outgoing   # Deny all outbound traffic by default.
+    ufw allow out 53 comment "DNS"
+    ufw allow out 67,68/udp comment "DHCP"
+    ufw allow out 80,443/tcp comment "HTTP Traffic"
+    ufw allow out 137,138/udp comment "NetBIOS/SMB Domain Resolution"
+    
+    ufw allow in from ... comment "Local Network"
+```
+
+Enable the UFW log and observe:
+
+```bash
+    ufw logging low
+    journalctl -f | grep -i ufw
+```
+
+There is no `journalctl` filter for UFW firewall events, unfortunately.
 
 ## Hosts file
 
