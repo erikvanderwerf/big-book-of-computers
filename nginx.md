@@ -47,8 +47,19 @@ stream {
     log_format stream   '$remote_addr [$time_local] $ssl_preread_server_name $name';
     access_log          /var/log/stream.log stream;
     
-    map $ssl_preread_server_name $name {
-        <sni_domain>     <upstream>;
+    map $ssl_preread_server_name    $name {
+        <sni_domain>                <name>;
+    }
+    
+    geo $access {
+        <internal subnet>   internal;
+        default             external;
+    }
+    
+    map $name:$access       $to_upstream {
+        "name:internal"     <upstream>;
+        "~name:.*"          <other>;
+        default             <another>;
     }
     
     upstream <upstream> {
@@ -56,10 +67,11 @@ stream {
     }
     
     server {
-        listen      443;
+        # Listen is not SSL because no termination occurs here.
+        listen                  443;
         proxy_connect_timeout   1s;
         proxy_timeout           3s;
-        proxy_pass              $name;
+        proxy_pass              $to_upstream;
         ssl_preread             on;
 }
 ```
