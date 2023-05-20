@@ -1,7 +1,9 @@
 # Kubernetes
+
 [Kubernetes](https://wiki.archlinux.org/title/kubernetes) is a system for automating the deployment, scaling, and management of containerized applications.
 
 ## K3s
+
 K3s is a lightweight version of Kubernetes, developed by Rancher.
 Install the latest or a specific version of K3s by running the install script.
 Collect the desired version from the releases page on [their GitHub](https://github.com/k3s-io/k3s/releases/).
@@ -14,3 +16,11 @@ curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION="v1.24.7+k3s1" sh -s –
 ```
 
 TODO There is a problem with K3s when the `ufw` firewall is enabled. Investigate which firewall rules are required.
+
+
+## MicroK8s
+
+MicroK8s is a Snap package for running a bare Kubernetes cluster on your computer.
+
+### Ingress
+Be sure to use `ingressClassName: public` to attach your Ingress rule to the default nginx IngressController.
