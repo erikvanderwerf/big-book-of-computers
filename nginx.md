@@ -2,6 +2,9 @@
 ```bash
 pacman -S nginx-mainline
 
+vim /etc/nginx.conf
+nginx -t    # Test configuration
+
 systemctl enable --now nginx
 ufw allow "WWW Full"
 ufw delete allow "WWW Full"
