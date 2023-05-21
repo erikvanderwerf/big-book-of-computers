@@ -147,6 +147,16 @@ create rules for every allowed action.
     ufw allow in from ... comment "Local Network"
 ```
 
+Here are some more syntax examples.
+The short syntax requires port ranges to include `/tcp` to specify the protocol, whereas
+the long syntax requires `proto tcp` explicitly.
+
+```bash
+    ufw allow X:Y/tcp
+    ufw allow out to X port Y:Z proto tcp comment "..."
+    ufw allow out [from X] [to Y] port Z
+```
+
 Enable the UFW log and observe:
 
 ```bash
