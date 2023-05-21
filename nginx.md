@@ -73,7 +73,7 @@ stream {
         # Listen is not SSL because no termination occurs here.
         listen                  443;
         proxy_connect_timeout   1s;
-        proxy_timeout           3s;
+        proxy_timeout           1h;             # Time between TCP traffic. Long timeout for websocket connections.
         proxy_pass              $to_upstream;
         ssl_preread             on;
 }
