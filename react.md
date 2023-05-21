@@ -18,6 +18,8 @@ Set up a git repository for the project.
 From the directory above the project root, run the `create-react-app` script in npx
 using the project name/directory.
 
+TODO `create-react-app --template typescript`
+
 ```bash
 npx create-react-app <directory>
 BROWSER=none npm start
