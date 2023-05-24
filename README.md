@@ -23,6 +23,7 @@ expected in places.
 ## TODO
 * zpool
 * smartctl
+* rclone
 
 # Getting Started
 
