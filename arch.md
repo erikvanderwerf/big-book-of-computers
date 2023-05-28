@@ -219,6 +219,7 @@ hosts: ... wins
     traceroute google.com      # Track network path.
     curl checkip.dyndns.org    # Get public IP.
     lsof -iTCP -P -n           # List open TCP ports.
+    ethtool -r eth0            # Restart a network connection.
 ```
 
 # Users
