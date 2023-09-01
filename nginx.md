@@ -115,7 +115,7 @@ server {
     
     listen 8443 ssl;
     ssl_certificate     /etc/letsencrypt/live/.../fullchain.pem;
-    ssl_vertificate_key /etc/letsencrypt/live/.../privkey.pem;
+    ssl_certificate_key /etc/letsencrypt/live/.../privkey.pem;
     include             /etc/letsencrypt/options-ssl-nginx.conf;
     ssl_dhparam         /etc/letsencrypt/ssl-dhparams.pem;
 }
