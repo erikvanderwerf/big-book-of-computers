@@ -30,7 +30,7 @@ store directly.
 openssl pks12 -export -in <pem>.pem -out <out>.pfx
 ```
 
-I have not had success in making the default `SSLContext` load this keystore just by setting `-Djavax.net.ssl.keyStore=`,
+I have not had success in making the default `SSLContext` load this keystore just by setting `‑Djavax.net.ssl.keyStore=`,
 so you may have manually load the store and configure a new `SSLContext` using this explicitly.
 
 ```kotlin
