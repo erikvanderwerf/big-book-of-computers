@@ -4,7 +4,7 @@ Setting up certificates is essential to configuring all modern environments, fro
 
 ```bash
 openssl
-keytool  # Java, $jre/bin
+keytool  # Java, <jre>/bin
 ```
 
 ## Mutual Authentication from [PEM](https://en.wikipedia.org/wiki/Privacy-Enhanced_Mail) in Java/Kotlin
@@ -12,18 +12,26 @@ keytool  # Java, $jre/bin
 Some internet services (e.g. MongoDB Atlas) can use mutual authentication but they only provide PEM files.
 This is fine when your client library supports PEM files directly, but Java does not natively have support
 for this.
+DO NOT fall into the trap of _importing_ the PEM file into a keystore file.
+This will import the certificate as a `trustedCertEntry` which will skipped over by Java's `KeyStore`.
+You instead need it available as a `PrivateKeyEntry`.
+
+```bash
+keytool -list -v -keystore <store>
+# Entry type: trustedCertEntry        <-- Will not be picked up by Java.
+# Entry type: PrivateKeyEntry         <-- This is good!
+```
 
 To natively use the private key from the PEM in Java it must be converted into a 
 [PKCS12](https://en.wikipedia.org/wiki/PKCS_12)
-store.
-
+store directly.
 
 ```bash
-openssl pks12 -export -in ${PEM_PATH}.pem -out ${OUT_PATH}.pfx
+openssl pks12 -export -in <pem>.pem -out <out>.pfx
 ```
 
-I have not had success using the default `SSLContext` to load this `pfx` store, so it may be required to
-manually load the store and configure a new `SSLContext` using this explicitly.
+I have not had success in making the default `SSLContext` load this keystore just by setting `-Djavax.net.ssl.keyStore=`,
+so you may have manually load the store and configure a new `SSLContext` using this explicitly.
 
 ```kotlin
 val keyStoreLocation = ...
@@ -53,4 +61,4 @@ sslContext.init(keyManagerFactory.keyManagers, trustManagerFactory.trustManagers
 ```
 
 Code adapted from [this blog post by Damian Terlecki](https://blog.termian.dev/posts/spring-mongodb-x509-ssl-tls/).
-MongoDB allowed connections once this was plugged in.
+MongoDB's mutual authentication worked following these steps.
