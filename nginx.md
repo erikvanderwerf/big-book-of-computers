@@ -8,6 +8,8 @@ nginx -t    # Test configuration
 systemctl enable --now nginx
 ufw allow "WWW Full"
 ufw delete allow "WWW Full"
+
+tail -f /var/log/nginx/error.log
 ```
 
 ## SSL Configuration
