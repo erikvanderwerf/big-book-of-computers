@@ -23,7 +23,7 @@ openssl pks12 -export -in ${PEM_PATH}.pem -out ${OUT_PATH}.pfx
 ```
 
 I have not had success using the default `SSLContext` to load this `pfx` store, so it may be required to
-manually load the store and configure it.
+manually load the store and configure a new `SSLContext` using this explicitly.
 
 ```kotlin
 val keyStoreLocation = ...
