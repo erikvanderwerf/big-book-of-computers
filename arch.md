@@ -17,12 +17,12 @@ Remember to keep it up-to-date when GRUB is updated.
 [Pacman](https://wiki.archlinux.org/title/pacman) is the package manager for Arch.
 
 ```bash
-    pacman -Sy <package>        # Install a package.
-    pacman -Syu                 # Upgrade the host.
-    pacman -R <package>         # Remove a package.
-    pacman -Rs <packge>         # Remove a package and its orphaned dependencies.
-    pacman -Qdt                 # Query for unnecessary packages.
-    pacman -Rns $(pacman -Qdt)  # Remove (including config) unnecessary packages.
+    pacman -Sy <package>               # Install a package.
+    pacman -Syu                        # Upgrade the host.
+    pacman -R <package>                # Remove a package.
+    pacman -Rs <packge>                # Remove a package and its orphaned dependencies.
+    pacman -Qdt                        # Query for unnecessary packages.
+    pacman -Qtdq | sudo pacman -Rns -  # Remove (including config) unnecessary packages.
 ```
 
 ## AUR Arch User Repository
@@ -32,7 +32,10 @@ It is up to the user to verify and compile the package themselves.
 ```bash
     cd builds/
     git clone <AUR git clone URL>
+    cd <project>
+    pacman -S --asdeps <dep1> <dep2>
     makepkg
+    makepkg --syncdeps --rmdeps
     pacman -U <package>
 ```
 
