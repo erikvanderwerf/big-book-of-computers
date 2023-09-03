@@ -21,6 +21,7 @@ Remember to keep it up-to-date when GRUB is updated.
     pacman -Syu                        # Upgrade the host.
     pacman -R <package>                # Remove a package.
     pacman -Rs <packge>                # Remove a package and its orphaned dependencies.
+    pacman -Qi                         # Query for package information.
     pacman -Qdt                        # Query for unnecessary packages.
     pacman -Qtdq | sudo pacman -Rns -  # Remove (including config) unnecessary packages.
 ```
