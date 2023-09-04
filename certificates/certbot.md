@@ -38,6 +38,9 @@ certbot certonly \
   --dns-google-domains-credentials '<Google Domains Config>'
 ```
 
+This certificate is good for the root domain and all single-level subdomains.
+Multi-level subdomain wilcard certificates do not exist, by design.
+
 # DDNS
 DDNS continuously pushes the public IP address of the LAN upstream to nameservers, such as [ddns.net] or [domains.google.com].
 
