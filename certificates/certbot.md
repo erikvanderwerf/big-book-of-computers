@@ -35,10 +35,11 @@ The latest instructions are available on Github: https://github.com/aaomidi/cert
 ```bash
 certbot certonly \
   --authenticator 'dns-google-domains' \
-  --dns-google-domains-credentials '<Google Domains Config>'
+  --dns-google-domains-credentials '<Google Domains Config>' \
+  -d <root> -d <*.root> -d <etc>
 ```
 
-This certificate is good for the root domain and all single-level subdomains.
+By default, this certificate does not work for the root domain unless also included separately.
 Multi-level subdomain wilcard certificates do not exist, by design.
 
 # DDNS
