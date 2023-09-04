@@ -1,4 +1,4 @@
-# Web Certificates
+# Certbot Basics
 
 Being able to sign a website against a trusted root certificate authority is important for hosting public and
 even private websites.
@@ -22,6 +22,21 @@ mkdir webroot && cd webroot/ && echo '<p>Hello There</p>' > index.html
 npx http-server -p 443 --log-ip -S --cert '.../fullchain.pem' --key '.../privkey.pem'
 ```
 
+# Wildcard Certificates on Google Domains
+
+Wildcard certificate generation and renewal must be performed by creating a custom DNS subdomain name configured
+to point to the correct place.
+The `--manual` generation option is available, but the process can also be automated using a 
+[community plugin](https://aur.archlinux.org/packages/certbot-dns-google-domains)
+for certbot.
+
+The latest instructions are available on Github: https://github.com/aaomidi/certbot-dns-google-domains.
+
+```bash
+certbot certonly \
+  --authenticator 'dns-google-domains' \
+  --dns-google-domains-credentials '<Google Domains Config>'
+```
 
 # DDNS
 DDNS continuously pushes the public IP address of the LAN upstream to nameservers, such as [ddns.net] or [domains.google.com].
