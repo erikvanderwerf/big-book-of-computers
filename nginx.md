@@ -77,6 +77,7 @@ stream {
         proxy_connect_timeout   1s;
         proxy_timeout           1h;             # Time between TCP traffic. Long timeout for websocket connections.
         proxy_pass              $to_upstream;
+        proxy_protocol          on;
         ssl_preread             on;
 }
 ```
@@ -113,7 +114,8 @@ server {
         index   <path>;
     }
     
-    listen 8443 ssl;
+    listen      8443    ssl proxy_protocol;
+    listen [::]:8443    ssl proxy_protocol;
     ssl_certificate     /etc/letsencrypt/live/.../fullchain.pem;
     ssl_certificate_key /etc/letsencrypt/live/.../privkey.pem;
     include             /etc/letsencrypt/options-ssl-nginx.conf;
