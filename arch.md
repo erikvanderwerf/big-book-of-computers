@@ -7,11 +7,8 @@ Follow the [Installation Guide](https://wiki.archlinux.org/title/Installation_gu
     pacstrap /mnt base linux grub efibootmgr networkmanager vim openssh
 ```
 
-Be aware that some virtualization tools (like QEMU on TrueNAS Scale...) will only look for a bootloader in the boot partition at `/ETI/BOOT/bootx64.efi`.
-Currently the best option for the FAT32 boot partition is to simply make a copy of the GRUB bootloader to that location.
-Remember to keep it up-to-date when GRUB is updated.
-
-* TODO document how to configure GRUB to place the bootloader in the right place.
+It is critically important that `linux` (the kernel) is installed, otherwise GRUB will not be able to configure
+the an option to boot into the OS partition.
 
 # Pacman
 [Pacman](https://wiki.archlinux.org/title/pacman) is the package manager for Arch.
@@ -105,20 +102,15 @@ Set the hostname with NetworkManager, or by editing `/etc/hostname`.
 
 ## NetworkManager
 [NetworkManager](https://wiki.archlinux.org/title/NetworkManager) is the preferred program for automatically configuring networks.
-NetworkManager casing is not consistent.
 
 ```bash
-    pacman -S networkmanager
     systemctl enable --now NetworkManger.service
     
     nmcli    # Command Line Interface.
     nmtui    # Text-Based Interface (Terminal Graphics).
 ```
 
-Remember to enable the interface to "automatically" start on reboot.
-Otherwise the interface will not be enabled next time.
-
-Be aware that on [TrueNAS Scale](https://www.truenas.com/docs/scale/scaletutorials/virtualization/accessingnasfromvm/), additional configuration is required to communicate between the host and guest.
+Remember to enable the network interface as well as the service in order to automatically start on reboot.
 
 ## ufw Firewall
 The [Uncomplicated Firewall](https://wiki.archlinux.org/title/Uncomplicated_Firewall) provides a command line interface to control the system firewall.
