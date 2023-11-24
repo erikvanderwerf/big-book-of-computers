@@ -105,6 +105,7 @@ Set the hostname with NetworkManager, or by editing `/etc/hostname`.
 
 ```bash
     systemctl enable --now NetworkManger.service
+    systemctl restart NetworkManager.service
     
     nmcli    # Command Line Interface.
     nmtui    # Text-Based Interface (Terminal Graphics).
