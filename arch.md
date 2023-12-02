@@ -238,14 +238,14 @@ Configure [SSH](https://wiki.archlinux.org/title/Secure_Shell) to allow remote c
     systemctl enable --now sshd
 ```
 
-## Create and Copy a Public Key
+## Create and Copy a Public Key from the Client to the Host
 Authenticating SSH connections with public keys is more secure, and also easier, compared to connecting with passwords.
-Create an identity if needed on the client, and then copy the key to the host.
+Create an identity if needed on the **client**, and then copy the public key to the **host**.
 Prefer ED25519 keys.
 
 ```bash
-    mkdir "$HOME/.ssh"
-    chmod 600 ~/.ssh
+    mkdir "$HOME/.ssh"  # On the Client
+    chmod 700 ~/.ssh
     
     # Set a passphrase.
     ssh-keygen -a 256 -t ed25519 -C "$(hostname)-$(date +'%d-%m-%Y')" -f "$HOME/.ssh/$(hostname)-$(date +'%d-%m-%Y')"
@@ -255,6 +255,7 @@ Prefer ED25519 keys.
     # Test the connection.
     ssh <user>@<host> -i ~/.ssh/identity -o PasswordAuthentication=no -vv
 ```
+
 ## Configure the Client SSH Agent
 The SSH Agent allows the OS to cache decrypted keys and pass them to SSH programs automatically.
 This reduces the number of password prompts the user sees.
