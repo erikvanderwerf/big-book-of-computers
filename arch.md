@@ -116,6 +116,8 @@ Remember to enable the network interface as well as the service in order to auto
 ## ufw Firewall
 The [Uncomplicated Firewall](https://wiki.archlinux.org/title/Uncomplicated_Firewall) provides a command line interface to control the system firewall.
 
+If you cannot run `ufw enable` due to an iptables issue, it may be because your kernel needs to reboot due to an installed update.
+
 ```bash
     ufw allow ssh               # Allow SSH preconfigured network rules.
     ufw limit ssh               # Allow SSH with rate limits.
