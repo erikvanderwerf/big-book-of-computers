@@ -24,8 +24,13 @@ system protocol.
 * NFS does not have any user authentication.
 * NFS does not translate user/group ids from local to remote.
 
+NFS v4 has more features...
+
 ```bash
 mount -t nfs -o rw,nconnect=16 host:/export/root /mount/on/client    # TrueNAS, NFSv3
 ```
 
-NFS v4 has more features...
+Beware that a Docker Compose issue that presents as a permissions issue may
+actually be solved by adding a file to an empty NFS mount.
+
+https://stackoverflow.com/questions/56126490/docker-run-on-nfs-mount-causes-fail-to-copy-and-fail-to-chown/71621978#71621978
