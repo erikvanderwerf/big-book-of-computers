@@ -14,7 +14,7 @@ tail -f /var/log/nginx/error.log
 
 ## SSL Configuration
 
-Reference [https](https.md) to generate an SSL certificate, then reference the
+Reference [certbot](certificates/certbot.md) to generate an SSL certificate, then reference the
 [Mozilla SSL Configuration Generator](https://ssl-config.mozilla.org/) to create
 an appropriate NGINX configuration file to `include`.
 
