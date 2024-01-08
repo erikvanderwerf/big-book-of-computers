@@ -263,6 +263,8 @@ The SSH Agent allows the OS to cache decrypted keys and pass them to SSH program
 This reduces the number of password prompts the user sees.
 Be sure to start only a single agent.
 
+If `systemd` is installed, [just use that](https://wiki.archlinux.org/title/SSH_keys#Start_ssh-agent_with_systemd_user).
+
 On systems without `systemd` (like Windows), configure the agent to start inside the `.bashrc`.
 This will start a new `ssh-agent` process if one is not currently running, and source the environment file if the current environment is not using the agent socket file.
 
@@ -282,7 +284,6 @@ echo "SSH Agent Started: ${SSH_AGENT_PID}"
 
 Be aware that since this is inside the `.bashrc` it will only run once the user opens a Bash prompt.
 Add to a different file if needed under other circumstances.
-If `systemd` is installed, [just use that](https://wiki.archlinux.org/title/SSH_keys#Start_ssh-agent_with_systemd_user).
 
 ## Configure the Client SSH Config
 Configure SSH to use an identity file and host shorthands.
@@ -292,7 +293,8 @@ Configure SSH to use an identity file and host shorthands.
 Match *
     AddKeysToAgent yes
 
-Host <host1> <host2>
+Host <name>
+    HostName <host>
     User <user>
     IdentitiesOnly yes
     IdentityFile ~/.ssh/<identity>
@@ -300,7 +302,7 @@ Host <host1> <host2>
 ```
 
 ## Lock Down the Host
-Run [ssh-audit](https://archlinux.org/packages/community/any/ssh-audit/) to find open SSH vulnerabilities.
+Run [ssh-audit](https://archlinux.org/packages/extra/any/ssh-audit/) to find open SSH vulnerabilities.
 
 ```bash
     ssh-audit localhost
