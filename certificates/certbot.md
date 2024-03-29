@@ -10,8 +10,9 @@ This means that DNS records and port (80) forwarding must already be set up and 
 
 ```bash
 pacman -S certbot                                                 # Install certbot.
-certbot certonly --standalone -v --email <email> -d <domains,>    # Make new certificates.
-certbot certonly                                                  # Renew expired certificates.
+certbot certonly --standalone -v --email <email> -d <domains,>    # Make new certificates using standalone plugin/server.
+certbot certonly --manual -v --email <email> -d <domains,> --preferred-challenges dns  # Manual DNS-01 challenge certificate.
+certbot renew                                                     # Renew expired certificates.
 certbot certificates                                              # List certificates.
 ```
 
